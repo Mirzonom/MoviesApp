@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.inomdev.moviesapp.MainViewModel
+import com.inomdev.moviesapp.screens.DetailsScreen
 import com.inomdev.moviesapp.screens.MainScreen
 import com.inomdev.moviesapp.screens.SplashScreen
 import com.inomdev.moviesapp.utils.Constants
@@ -26,8 +27,12 @@ fun SetupNavHost(navController: NavHostController, viewModel: MainViewModel) {
         composable(route = Screens.Main.route) {
             MainScreen(navController, viewModel = viewModel)
         }
-        composable(route = Screens.Details.route) {
-
+        composable(route = Screens.Details.route + "/{Id}") { backStackEntry ->
+            DetailsScreen(
+                navController = navController,
+                viewModel = viewModel,
+                itemId = backStackEntry.arguments?.getString("Id") ?: "1"
+            )
         }
 
     }
