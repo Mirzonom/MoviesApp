@@ -13,12 +13,14 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
-    const val BASE_URL = "https://api.tvmaze.com/"
+
+    @Provides
+    fun baseUrl() = "https://api.tvmaze.com/"
 
     @Provides
     @Singleton
-    fun provideRetrofit(): ApiServices = Retrofit.Builder()
-        .baseUrl(BASE_URL)
+    fun provideRetrofit(baseUrl: String): ApiServices = Retrofit.Builder()
+        .baseUrl(baseUrl)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
         .create(ApiServices::class.java)
